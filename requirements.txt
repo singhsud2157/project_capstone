@@ -2,7 +2,6 @@ streamlit
 altair
 pandas
 vega_datasets
-PIL
 matplotlib
 numpy
 os
