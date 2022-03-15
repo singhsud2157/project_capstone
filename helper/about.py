@@ -1,4 +1,4 @@
-from turtle import width
+#from turtle import width
 import streamlit as st 
 import pandas as pd
 from  PIL import Image
@@ -17,6 +17,6 @@ def abount_main():
         st.markdown('<p class="font">About the Project</p>', unsafe_allow_html=True)
         
     with col2:               # To display brand logo
-        st.image(logo, width=130)
+        st.image(logo)
     st.write("Chen Xu, Himank Kansal & Sudeep Singh")    
     
