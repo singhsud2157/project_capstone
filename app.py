@@ -31,6 +31,13 @@ def main():
 #         "nav-link-selected": {"background-color": "orange"},
 #     }
 # )
+    hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
     
     with st.sidebar:
         choose = option_menu("Capstone", ["About", "Project Planning", "Data", "Chart", "Prediction", "Contact"],
