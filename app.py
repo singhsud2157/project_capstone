@@ -7,6 +7,7 @@ from helper.display_data import display_main
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from helper.altair_chart import show_altair
+from helper.medical_chart import *
 
 def main():
     st.set_page_config(layout="wide")
@@ -59,12 +60,14 @@ def main():
         AgGrid(df, height=800,gridOptions=gridOptions,  enable_enterprise_modules=False)
     
     elif choose == 'Chart':
-        # list =get_file_list()
-        # add_selectbox = st.sidebar.selectbox("### Select the data file :",list)
-        # df = get_data_frame(add_selectbox)
-        # st.bar_chart(df)
-        #display_main(df) 
-        st.altair_chart(show_altair())
+        chart_list = ['chart','chart1', 'chart2', 'chart3']
+        chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
+        if chart_selectbox== 'chart':
+            st.altair_chart(show_altair())
+        elif chart_selectbox == 'chart1':
+            st.plotly_chart(get_med_chart_1(), use_container_width=True)
+        elif chart_selectbox == 'chart2':
+            st.plotly_chart(get_mad_chart_2(), use_container_width=True)
     elif choose == 'Contact':
         contact_main()
     
