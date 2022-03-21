@@ -6,7 +6,7 @@ from helper.select_data import get_file_list, get_data_frame
 from helper.display_data import display_main
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
-from helper.altair_chart import show_altair
+from helper.altair_chart import *
 from helper.medical_chart import *
 
 def main():
@@ -40,8 +40,8 @@ def main():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
     
     with st.sidebar:
-        choose = option_menu("Capstone", ["About", "Project Planning", "Data", "Chart", "Prediction", "Contact"],
-                         icons=['house', 'kanban', 'camera fill', 'book', 'book','person lines fill'],
+        choose = option_menu("Capstone", ["About", "Project Planning", "Data",  "Data Exploration","Chart", "Prediction", "Contact"],
+                         icons=['house', 'kanban', 'camera fill', 'book','book', 'book','person lines fill'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
         "container": {"padding": "5!important", "background-color": "#fafafa"},
@@ -65,7 +65,16 @@ def main():
         gridOptions = gb.build()
 
         AgGrid(df, height=800,gridOptions=gridOptions,  enable_enterprise_modules=False)
-    
+    elif choose == 'Data Exploration':
+        st.title("Data Exploration")
+        file_list =get_file_list()
+        file_name = st.selectbox("Choose a variable for the x-axis", file_list, index=0)
+        df = get_data_frame(file_name)
+        column_list = df.columns
+        x_axis = st.selectbox("Choose a variable for the x-axis", column_list, index=0)
+        y_axis = st.selectbox("Choose a variable for the y-axis", column_list, index=1)
+        graph = visualize_chart_data(df, x_axis, y_axis, column_list)
+        st.write(graph)
     elif choose == 'Chart':
         chart_list = ['chart','chart1', 'chart2', 'chart3']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)

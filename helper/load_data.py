@@ -14,6 +14,12 @@ def get_file_list():
     csv_files_list = list(filter(lambda f: f.endswith('.csv'), filenames_list))
     return csv_files_list
 
+def get_column_name(filename):
+    column_list = []
+    df = get_data_frame(filename)
+    column_list = df.columns
+    return column_list
+
 def get_data_frame(filename):
     file_path = path_to_dir + '/' + filename
     df = pd.read_csv(file_path)

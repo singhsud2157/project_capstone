@@ -61,3 +61,15 @@ def show_altair():
     )
     
     return (background + connections + points).configure_view(stroke=None)
+
+
+def visualize_chart_data(df, x_axis, y_axis, column_list):
+    graph = alt.Chart(df).mark_circle(size=60).encode(
+        x=x_axis,
+        y=y_axis,
+        color=column_list[0]
+    ).properties(
+    width=500,
+    height=500
+    ).interactive()
+    return graph
