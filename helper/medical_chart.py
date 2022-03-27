@@ -95,7 +95,14 @@ def get_mad_chart_3():
      target_list = target_list+ list(braak_dementia_df['act_demented'])
      value_list = value_list+ list(braak_dementia_df['donor_name'])
 
+     nodecolor_list= ['rgba(31, 119, 180, 0.8)', 'rgba(255, 127, 14, 0.8)', 'rgba(44, 160, 44, 0.8)', 'rgba(214, 39, 40, 0.8)', 
+                 'rgba(148, 103, 189, 0.8)', 'rgba(140, 86, 75, 0.8)', 'rgba(227, 119, 194, 0.8)', 'rgba(127, 127, 127, 0.8)',
+                 'rgba(188, 189, 34, 0.8)', 'rgba(23, 190, 207, 0.8)', 'rgba(31, 119, 180, 0.8)', 'rgba(255, 127, 14, 0.8)', 
+                 'rgba(44, 160, 44, 0.8)']
+     opacity = 0.4
 
+     linkcolor_list = [nodecolor_list[src].replace("0.8", str(opacity)) for src in source_list]
+     
      fig = go.Figure(data=[go.Sankey(
      node = dict(
       pad = 15,
@@ -109,7 +116,8 @@ def get_mad_chart_3():
     link = dict(
       source = source_list, 
       target = target_list,
-      value = value_list
+      value = value_list,
+      color = linkcolor_list  
       ))])
 
      fig.update_layout(title_text="Basic Sankey Diagram", font_size=10)
