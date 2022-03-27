@@ -84,6 +84,8 @@ def main():
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
         elif chart_selectbox == 'chart2':
             st.plotly_chart(get_mad_chart_2(), use_container_width=True)
+        elif chart_selectbox == 'chart3':
+            st.plotly_chart(get_mad_chart_3(), use_container_width=True)
     elif choose == 'Contact':
         contact_main()
     
