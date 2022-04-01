@@ -34,7 +34,20 @@ def get_dataframe_list(filename_list):
 def merge_two_dataframe(df1, df2, merge_on):
     df = pd.merge(df1,df2, on = merge_on)
     print(df.head(5))
-    
+    return df
+
 def merge_dataframe_list(df_list, merge_on)    :
     return reduce(lambda x,y: pd.merge(x,y, on=merge_on, how='outer'), df_list)
     
+def get_merge_dataframe(file_name_list):
+    df_list  = get_dataframe_list(file_name_list)
+    main_list = []
+    for df in df_list:
+        list_a = df.columns.values.tolist()
+        main_list.append(list_a)
+    common_element_list = [ele[0] for ele in zip(*main_list) if len(set(ele)) == 1]
+#   print(common_element_list)
+    df_merge = pd.DataFrame()
+    if len(common_element_list) > 0:
+        df_merge = merge_dataframe_list(df_list, common_element_list[0]) 
+    return df_merge

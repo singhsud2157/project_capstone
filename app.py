@@ -68,19 +68,21 @@ def main():
     elif choose == 'Data Exploration':
         st.title("Data Exploration")
         file_list =get_file_list()
-        file_name = st.selectbox("Choose a variable for the x-axis", file_list, index=0)
-        df = get_data_frame(file_name)
-        column_list = df.columns
-        x_axis = st.selectbox("Choose a variable for the x-axis", column_list, index=0)
-        y_axis = st.selectbox("Choose a variable for the y-axis", column_list, index=1)
-        graph = visualize_chart_data(df, x_axis, y_axis, column_list)
-        st.write(graph)
+        select_file_name_list = st.multiselect("Select the file:", options=file_list, default=file_list[0])
+        if select_file_name_list :
+            merge_df = get_merge_dataframe(select_file_name_list)
+            if merge_df.empty:
+                st.error('Wrong selection of files')
+            else:
+                column_list = merge_df.columns
+                x_axis = st.selectbox("Choose a variable for the x-axis:", column_list, index=0)
+                y_axis = st.selectbox("Choose a variable for the y-axis:", column_list, index=1)
+                graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
+                st.write(graph)
     elif choose == 'Chart':
-        chart_list = ['chart','chart1', 'chart2', 'chart3']
+        chart_list = ['chart1', 'chart2', 'chart3']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
-        if chart_selectbox== 'chart':
-            st.altair_chart(show_altair())
-        elif chart_selectbox == 'chart1':
+        if chart_selectbox == 'chart1':
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
         elif chart_selectbox == 'chart2':
             st.plotly_chart(get_mad_chart_2(), use_container_width=True)
