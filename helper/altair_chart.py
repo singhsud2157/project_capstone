@@ -1,75 +1,28 @@
 import streamlit as st
 import altair as alt
 import pandas as pd
-from vega_datasets import data
 import data_files
-
-
-def show_altair():
-    
-    airports = pd.read_csv("data_files/airports.csv")
-    flights_airport = pd.read_csv("data_files/flights-airport.csv")
-        
-    states = alt.topo_feature(data.us_10m.url, feature="states")
-    # Create mouseover selection
-    select_city = alt.selection_single(
-        on="mouseover", nearest=True, fields=["origin"], empty="none"
-    )
-    # Define which attributes to lookup from airports.csv
-    lookup_data = alt.LookupData(
-        airports, key="iata", fields=["state", "latitude", "longitude"]
-    )
-    background = alt.Chart(states).mark_geoshape(
-        fill="lightgray",
-        stroke="white"
-    ).properties(
-        width=750,
-        height=500
-    ).project("albersUsa")
-    connections = alt.Chart(flights_airport).mark_rule(opacity=0.35).encode(
-        latitude="latitude:Q",
-        longitude="longitude:Q",
-        latitude2="lat2:Q",
-        longitude2="lon2:Q"
-    ).transform_lookup(
-        lookup="origin",
-        from_=lookup_data
-    ).transform_lookup(
-        lookup="destination",
-        from_=lookup_data,
-        as_=["state", "lat2", "lon2"]
-    ).transform_filter(
-        select_city
-    )
-    
-    points = alt.Chart(flights_airport).mark_circle().encode(
-        latitude="latitude:Q",
-        longitude="longitude:Q",
-        size=alt.Size("routes:Q", scale=alt.Scale(range=[0, 1000]), legend=None),
-        order=alt.Order("routes:Q", sort="descending"),
-        tooltip=["origin:N", "routes:Q"]
-    ).transform_aggregate(
-        routes="count()",
-        groupby=["origin"]
-    ).transform_lookup(
-        lookup="origin",
-        from_=lookup_data
-    ).transform_filter(
-        (alt.datum.state != "PR") & (alt.datum.state != "VI")
-    ).add_selection(
-        select_city
-    )
-    
-    return (background + connections + points).configure_view(stroke=None)
-
+import matplotlib.pyplot as plt
 
 def visualize_chart_data(df, x_axis, y_axis, column_list):
     graph = alt.Chart(df).mark_circle(size=60).encode(
         x=x_axis,
         y=y_axis,
-        color=column_list[0]
+        color=x_axis
     ).properties(
     width=500,
     height=500
     ).interactive()
     return graph
+
+def display_scatter_chart(df, x_axis, y_axis, column_list):
+     if x_axis and y_axis:
+        scatter_fig = plt.figure(figsize=(6,4))
+        scatter_ax = scatter_fig.add_subplot(111)
+
+        malignant_df = df[df["target"] == "malignant"]
+        benign_df = df[df["target"] == "benign"]
+
+        malignant_df.plot.scatter(x=x_axis, y=y_axis, s=120, c="tomato", alpha=0.6, ax=scatter_ax, label="Malignant")
+        benign_df.plot.scatter(x=x_axis, y=y_axis, s=120, c="dodgerblue", alpha=0.6, ax=scatter_ax,
+                            title="{} vs {}".format(x_axis.capitalize(), y_axis.capitalize()), label="Benign")

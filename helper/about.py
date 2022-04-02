@@ -19,4 +19,16 @@ def abount_main():
     with col2:               # To display brand logo
         st.image(logo)
     st.write("Chen Xu, Himank Kansal & Sudeep Singh")    
-    
+    st.write("We will write about team members")  
+
+def about_project():
+    col1, col2 = st.columns( [0.8, 0.2])
+    with col1:               # To display the header text using css style
+        st.markdown(""" <style> .font {
+        font-size:35px ; font-family: 'Cooper Black'; color: #FF9633;} 
+        </style> """, unsafe_allow_html=True)
+        st.markdown('<p class="font">About the Project</p>', unsafe_allow_html=True)
+        
+    with col2:               # To display brand logo
+        st.image(logo)
+    st.write("We will write about Project and publish the project report")  

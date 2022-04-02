@@ -1,9 +1,9 @@
+from cmath import e
 import streamlit as st
 from streamlit_option_menu import option_menu
-from helper.about import abount_main
+from helper.about import abount_main, about_project
 from helper.contact import contact_main
 from helper.select_data import get_file_list, get_data_frame
-from helper.display_data import display_main
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from helper.altair_chart import *
@@ -40,7 +40,7 @@ def main():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
     
     with st.sidebar:
-        choose = option_menu("Capstone", ["About", "Project Planning", "Data",  "Data Exploration","Chart", "Prediction", "Contact"],
+        choose = option_menu("Capstone", ["About Team", "About Project", "Data",  "Data Exploration","Chart", "Prediction", "Contact"],
                          icons=['house', 'kanban', 'camera fill', 'book','book', 'book','person lines fill'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
@@ -51,8 +51,10 @@ def main():
     }
     )
     
-    if choose == 'About':
+    if choose == 'About Team':
         abount_main()
+    elif choose == 'About Project':
+        about_project()
     elif choose == 'Data':
         list =get_file_list()
         add_selectbox = st.sidebar.selectbox("Select the data file",list)
@@ -74,6 +76,15 @@ def main():
             if merge_df.empty:
                 st.error('Wrong selection of files')
             else:
+                non_floats = []
+                try:
+                    for col in merge_df:
+                        if (merge_df[col].dtypes != "float64") and (merge_df[col].dtypes != "int64"):
+                            non_floats.append(col)
+                    if(len(non_floats) >0):
+                        merge_df = merge_df.drop(columns=non_floats)
+                except Exception as e:
+                    print('error', e)
                 column_list = merge_df.columns
                 x_axis = st.selectbox("Choose a variable for the x-axis:", column_list, index=0)
                 y_axis = st.selectbox("Choose a variable for the y-axis:", column_list, index=1)
@@ -88,6 +99,8 @@ def main():
             st.plotly_chart(get_mad_chart_2(), use_container_width=True)
         elif chart_selectbox == 'chart3':
             st.plotly_chart(get_mad_chart_3(), use_container_width=True)
+    elif choose == 'Prediction':
+        st.write('our prediction model is coming soon')
     elif choose == 'Contact':
         contact_main()
     
