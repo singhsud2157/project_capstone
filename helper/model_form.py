@@ -4,7 +4,7 @@ def get_model_form():
     st.markdown(""" <style> .font {
     font-size:30px ; font-family: 'Cooper Black'; color: #FF9633;} 
     </style> """, unsafe_allow_html=True)
-    st.markdown('<p class="font">Brain Dimensia Prediction Model</p>', unsafe_allow_html=True)
+    st.markdown('<p class="font">Brain Dementia Prediction Model</p>', unsafe_allow_html=True)
     uploaded_file = st.file_uploader("Upload File(csv)")
     with st.form(key='columns_in_form2',clear_on_submit=True): #set clear_on_submit=True so that the form will be reset/cleared once it's submitted
         #st.write('Please help us improve!')
