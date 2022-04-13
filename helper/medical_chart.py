@@ -1,9 +1,12 @@
-import plotly.graph_objects as go
-import pandas as pd
-import numpy as np
 import random
+
+import numpy as np
+import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 from plotly.offline import plot
+import plotly
+
 from helper.load_data import *
 
 files_to_merge_1_list = ['DonorInformation.csv', 'ProteinAndPathologyQuantifications.csv']
@@ -21,7 +24,7 @@ def get_med_chart_1():
     fig.update_layout(title='IRR', autosize=False, width=800, height=800, margin=dict(l=40, r=40, b=40, t=40))
     return fig
 
-def get_mad_chart_2():
+def get_mad_chart_2_o():
     df_list = get_dataframe_list(files_to_merge_1_list)
     df_main = merge_dataframe_list(df_list,'donor_id')
     d_list = ['ptau_ng_per_mg','ab42_pg_per_mg','ab40_pg_per_mg','ihc_at8','braak', 'sex']
@@ -53,6 +56,52 @@ def get_mad_chart_2():
     )
 )
     return fig
+
+def get_mad_chart_2():
+     df_list = get_dataframe_list(files_to_merge_1_list)
+     df_main = merge_dataframe_list(df_list,'donor_id')
+    
+     df_main.apo_e4_allele.replace(['Y', 'N'], [1, 0], inplace=True)
+     df_main.act_demented.replace(['No Dementia', 'Dementia'], [1, 0], inplace=True)
+     df_main['apo_e4_allele'] = df_main['apo_e4_allele'].fillna(2)
+     df_main['apo_e4_allele'] = df_main['apo_e4_allele'].astype(int)
+     df_main['act_demented'] = df_main['act_demented'].astype(int)
+    
+     d_list = ['donor_id','cerad', 'braak', 'apo_e4_allele','num_tbi_w_loc', 'act_demented','ihc_at8', 'ihc_a_beta', 'a_syn_pg_per_mg']
+     df_plot = df_main[d_list]
+        
+     fig = go.Figure(data=
+     go.Parcoords(
+        line = dict(color = df_plot['cerad'],
+                   colorscale = 'Electric',
+                   showscale = True,
+                   cmin = 0,
+                   cmax = 7),
+        dimensions = list([
+            dict(range = [0,3],
+                 label = 'cerad', values = df_plot['cerad']),
+            dict(range = [0,8],
+                 label = 'braak', values = df_plot['braak']),
+            dict(range = [0,2],
+                 label = 'apo_e4_allele', values = df_plot['apo_e4_allele']),
+            dict(range = [0,3],
+                 visible = True,
+                 label = 'num_tbi_w_loc', values = df_plot['num_tbi_w_loc']),
+            dict(range = [0.000018,0.112065],
+                 visible = True,
+                 label = 'ihc_at8', values = df_plot['ihc_at8']),
+            dict(range = [0.000157,0.088290],
+                 visible = True,
+                 label = 'ihc_a_beta', values = df_plot['ihc_a_beta']),
+            dict(range = [0.020000,2.556488],
+                 visible = True,
+                 label = 'a_syn_pg_per_mg', values = df_plot['a_syn_pg_per_mg']),
+            dict(range = [0,1],
+                 visible = True,
+                 label = 'act_demented', values = df_plot['act_demented'])])
+    )
+)
+     return fig
 
 def get_mad_chart_3():
      metrics_df = get_data_frame('ProteinAndPathologyQuantifications.csv')

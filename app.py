@@ -8,6 +8,7 @@ from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from helper.altair_chart import *
 from helper.medical_chart import *
+from helper.model_form import *
 
 def main():
     st.set_page_config(layout="wide")
@@ -91,7 +92,7 @@ def main():
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
                 st.write(graph)
     elif choose == 'Chart':
-        chart_list = ['chart1', 'chart2', 'chart3']
+        chart_list = ['chart2', 'chart3']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
         if chart_selectbox == 'chart1':
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
@@ -100,7 +101,7 @@ def main():
         elif chart_selectbox == 'chart3':
             st.plotly_chart(get_mad_chart_3(), use_container_width=True)
     elif choose == 'Prediction':
-        st.write('our prediction model is coming soon')
+        get_model_form()
     elif choose == 'Contact':
         contact_main()
     

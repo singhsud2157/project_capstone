@@ -1,11 +1,9 @@
+from functools import reduce
 from logging import exception
 from os import listdir
-from functools import reduce
-import plotly.graph_objects as go
 import pandas as pd
-import plotly.express as px
-from plotly.offline import plot
-
+import streamlit as st
+import random
 
 path_to_dir = 'data_files'
 
@@ -22,7 +20,21 @@ def get_column_name(filename):
 
 def get_data_frame(filename):
     file_path = path_to_dir + '/' + filename
-    df = pd.read_csv(file_path)
+    if filename == 'DonorInformation.csv':
+        df = pd.read_csv(file_path)
+        d1=df["age"][df['age']=="90-94"]
+        for i in range(0, len(d1.index)):
+            df.loc[d1.index[i], 'age'] = random.randint(90, 94)
+        d2=df["age"][df['age']=="95-99"]
+        for i in range(0, len(d2.index)):
+            df.loc[d2.index[i], 'age'] = random.randint(95, 99)
+        d3=df["age"][df['age']=="100+"]
+        for i in range(0, len(d3.index)):
+            df.loc[d3.index[i], 'age'] = random.randint(100, 105)
+
+        df['age'] = df['age'].astype(int)   
+    else:
+        df = pd.read_csv(file_path)
     return df
 
 def get_dataframe_list(filename_list):
@@ -51,3 +63,4 @@ def get_merge_dataframe(file_name_list):
     if len(common_element_list) > 0:
         df_merge = merge_dataframe_list(df_list, common_element_list[0]) 
     return df_merge
+
