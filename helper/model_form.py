@@ -54,9 +54,9 @@ def get_model_form():
             form_list_values.append(a_syn_pg_per_mg)
             form_list_values.append(mcp_1_pg_per_mg)
             form_list_values.append(ab42_pg_per_mg)
-            form_list_values1 = [3,6,0.013154,0.012725,0.000078,0.01158,0.013552,0.731336,0.457328,0.17,400.831725,0.30181,0.070626,41.73,100.00085]
+            #form_list_values1 = [3,6,0.013154,0.012725,0.000078,0.01158,0.013552,0.731336,0.457328,0.17,400.831725,0.30181,0.070626,41.73,100.00085]
             df_model = pd.DataFrame(columns = form_list_lables)
-            df_model.loc[len(df_model)] = form_list_values1
+            df_model.loc[len(df_model)] = form_list_values
             
             pickle_in = open('helper/model.pkl', 'rb') 
             classifier = pickle.load(pickle_in)
