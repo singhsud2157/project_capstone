@@ -12,7 +12,17 @@ def get_model_form():
     font-size:30px ; font-family: 'Cooper Black'; color: #FF9633;} 
     </style> """, unsafe_allow_html=True)
     st.markdown('<p class="font">Brain Dementia Prediction Model</p>', unsafe_allow_html=True)
-    uploaded_file = st.file_uploader("Upload File(csv)")
+    uploaded_file = st.file_uploader("Upload File(csv)", type =["csv"])
+    if uploaded_file is not None:
+        uploaded_df = pd.read_csv(uploaded_file)
+        pickle_in = open('helper/model.pkl', 'rb') 
+        classifier = pickle.load(pickle_in)
+        prediction = classifier.predict_proba(uploaded_df)
+     
+        output='{0:.{1}f}'.format(prediction[0][1], 2)
+        output = (float(output) * 100)
+        output_string = "Chances of getting Dementia is **"+str(output)+"%**"
+        st.write(output_string)
     with st.form(key='dimentia_form',clear_on_submit=True): 
         st.subheader("Enter Values: ")
         col1, col2, col3 = st.columns([5,5,5])
@@ -55,7 +65,7 @@ def get_model_form():
             form_list_values.append(float(mcp_1_pg_per_mg))
             form_list_values.append(float(ab42_pg_per_mg))
             #form_list_values1 = [3,6,0.013154,0.012725,0.000078,0.01158,0.013552,0.731336,0.457328,0.17,400.831725,0.30181,0.070626,41.73,100.00085]
-            print(form_list_values)
+            #print(form_list_values)
             df_model = pd.DataFrame(columns = form_list_lables)
             df_model.loc[len(df_model)] = form_list_values
             
@@ -64,4 +74,6 @@ def get_model_form():
             prediction = classifier.predict_proba(df_model)
             
             output='{0:.{1}f}'.format(prediction[0][1], 2)
-            st.write(output)
+            output = (float(output) * 100)
+            output_string = "Chances of getting Dementia is **"+str(output)+"%**"
+            st.write(output_string)
