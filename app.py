@@ -120,7 +120,11 @@ def main():
     elif choose == 'Feedback/Queries':
         contact_main()
     elif choose == 'Ethics':
-        ethics_string = "As we are dealing with medical data, we need to think of ethical implications. Patient data have conventionally been thought to be well protected by the privacy laws outlined in the United States. But there are great concerns that shared patient data or data voluntarily provided by patients for research may be exploited for commercial interests. We as researchers should consider participants’ privacy and security while using shared data through new technologies such as artificial intelligence and other remote technologies."
+        ethics_string = """As we are dealing with medical data, we need to think of ethical implications. 
+        Patient data have conventionally been thought to be well protected by the privacy laws outlined in the United States. 
+        But there are great concerns that shared patient data or data voluntarily provided by patients for research may be exploited for commercial interests. 
+        We as researchers should consider participants’ privacy and security while using shared data through new technologies such as 
+        artificial intelligence and other remote technologies."""
         st.markdown(f'<h1 style="font-family:sans-serif;color:Blue;font-size:20px;">{ethics_string}</h1>', unsafe_allow_html=True)
      
 if __name__ == '__main__':
