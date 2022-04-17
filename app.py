@@ -125,7 +125,7 @@ def main():
         But there are great concerns that shared patient data or data voluntarily provided by patients for research may be exploited for commercial interests. 
         We as researchers should consider participants’ privacy and security while using shared data through new technologies such as 
         artificial intelligence and other remote technologies."""
-        st.markdown(f'<h1 style="font-family:sans-serif;color:Blue;font-size:20px;">{ethics_string}</h1>', unsafe_allow_html=True)
+        st.markdown(f'<h1 style="font-family:sans-serif;color:Black;font-size:20px;">{ethics_string}</h1>', unsafe_allow_html=True)
      
 if __name__ == '__main__':
     main()
