@@ -2,62 +2,17 @@ import random
 
 import numpy as np
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-from plotly.offline import plot
 import plotly
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
+from sklearn import metrics
+import plotly.graph_objects as go
 
 from helper.load_data import *
 
 files_to_merge_1_list = ['DonorInformation.csv', 'ProteinAndPathologyQuantifications.csv']
 
 def get_med_chart_1():
-    df_list = get_dataframe_list(files_to_merge_1_list)
-    df_main = merge_dataframe_list(df_list,'donor_id')
-    d_list = ['ptau_ng_per_mg','ab42_pg_per_mg','ab40_pg_per_mg','ihc_at8','braak', 'sex']
-    df_plot = df_main[d_list]
-    df_plot.sex.replace(['M', 'F'], [1, 0], inplace=True)
-    #print(df_plot.head(5))
-    #print(df_plot.max().to_frame().T)
-    #print(df_plot.min().to_frame().T)
-    fig = px.parallel_coordinates(df_plot, color="ptau_ng_per_mg", labels=d_list, color_continuous_scale=px.colors.diverging.Tealrose, color_continuous_midpoint=2)
-    fig.update_layout(title='IRR', autosize=False, width=800, height=800, margin=dict(l=40, r=40, b=40, t=40))
-    return fig
-
-def get_mad_chart_2_o():
-    df_list = get_dataframe_list(files_to_merge_1_list)
-    df_main = merge_dataframe_list(df_list,'donor_id')
-    d_list = ['ptau_ng_per_mg','ab42_pg_per_mg','ab40_pg_per_mg','ihc_at8','braak', 'sex']
-    df_plot = df_main[d_list]
-    df_plot.sex.replace(['M', 'F'], [1, 0], inplace=True)
-    print(df_plot.head(5))
-    
-    fig = go.Figure(data=
-    go.Parcoords(
-        line = dict(color = df_plot['ptau_ng_per_mg'],
-                   colorscale = 'Electric',
-                   showscale = True,
-                   cmin = -4000,
-                   cmax = -100),
-        dimensions = list([
-            dict(range = [0,7],
-                 label = "ptau_ng_per_mg", values = df_plot['ptau_ng_per_mg']),
-            dict(range = [0,700],
-                 label = 'ab42_pg_per_mg', values = df_plot['ab42_pg_per_mg']),
-            dict(range = [0,1000],
-                 label = 'ab40_pg_per_mg', values = df_plot['ab40_pg_per_mg']),
-            dict(range = [0,2],
-                 label = 'ihc_at8', values = df_plot['ihc_at8']),
-            dict(range = [0,6],
-                 visible = True,
-                 label = 'braak', values = df_plot['braak']),
-            dict(range = [0,1],
-                 label = 'sex', values = df_plot['sex'])])
-    )
-)
-    return fig
-
-def get_mad_chart_2():
      df_list = get_dataframe_list(files_to_merge_1_list)
      df_main = merge_dataframe_list(df_list,'donor_id')
     
@@ -103,7 +58,7 @@ def get_mad_chart_2():
 )
      return fig
 
-def get_mad_chart_3():
+def get_med_sanky_chart_1():
      metrics_df = get_data_frame('ProteinAndPathologyQuantifications.csv')
      donor_df = get_data_frame('DonorInformation.csv')  
      d1=donor_df["age"][donor_df['age']=="90-94"]
@@ -170,4 +125,142 @@ def get_mad_chart_3():
       ))])
 
      fig.update_layout(title_text="Basic Sankey Diagram", font_size=10)
+     return fig
+
+def get_med_sanky_chart_2():
+     metrics_df = get_data_frame('ProteinAndPathologyQuantifications.csv')
+     donor_df = get_data_frame('DonorInformation.csv')  
+     
+     scaler = MinMaxScaler()
+     scaled_at8= scaler.fit_transform(metrics_df['ihc_at8_ffpe'].to_frame())
+     result_at8 = pd.cut(scaled_at8.ravel(), bins=[0.0, 0.2, 0.4, 0.6, 0.8, 1.00], right=True, labels=False)+1
+     scaled_abeta= scaler.fit_transform(metrics_df['ihc_a_beta_ffpe'].to_frame())
+     result_abeta = pd.cut(scaled_abeta.ravel(), bins=[0.0, 0.2, 0.4, 0.6, 0.8, 1.00], right=True, labels=False).astype(int)+1
+     
+     metrics_donor_df = pd.merge(metrics_df, donor_df,  how='left', left_on='donor_name', right_on = 'name')
+    
+     scaler = MinMaxScaler()
+     scaled_at8= scaler.fit_transform(metrics_donor_df['ihc_at8_ffpe'].to_frame())
+     result_at8 = pd.cut(scaled_at8.ravel(), bins=[0.0, 0.2, 0.4, 0.6, 0.8, 1.00], right=True, labels=False).astype(int)+1
+     scaled_abeta= scaler.fit_transform(metrics_donor_df['ihc_a_beta_ffpe'].to_frame())
+     result_abeta = pd.cut(scaled_abeta.ravel(), bins=[0.0, 0.2, 0.4, 0.6, 0.8, 1.00], right=True, labels=False).astype(int)+1
+
+     source_df = metrics_donor_df[['braak',  'act_demented']]
+     source_df['a_beta'] = result_abeta
+     source_df['at8'] = result_at8
+     source_df['act_demented']=  source_df['act_demented'].map({'Dementia': 1, 'No Dementia': 0})
+     source_df = source_df[(source_df['a_beta']>0) & (source_df['at8']>0)]
+
+     braak_at8 = source_df.groupby(['braak', 'at8'])['act_demented'].aggregate(np.ma.count)
+     braak_at8_df =pd.DataFrame(braak_at8)
+     braak_at8_df.reset_index(inplace=True)
+     braak_at8_df['at8'] = braak_at8_df['at8']+6
+
+     source_list = list(braak_at8_df['braak'])
+     target_list = list(braak_at8_df['at8'])
+     value_list =list(braak_at8_df['act_demented'])
+     
+     at8_dementia = source_df.groupby(['at8', 'act_demented'])['braak'].aggregate(np.ma.count)
+     at8_dementia_df =pd.DataFrame(at8_dementia)
+     at8_dementia_df.reset_index(inplace=True)
+     at8_dementia_df['at8'] = at8_dementia_df['at8'] + 6 
+     at8_dementia_df['act_demented'] = at8_dementia_df['act_demented'] + 12
+     
+     source_list =source_list + list(at8_dementia_df['at8'])
+     target_list = target_list+ list(at8_dementia_df['act_demented'])
+     value_list = value_list+ list(at8_dementia_df['braak'])
+     
+     nodecolor_list= ['rgba(31, 119, 180, 0.8)', 'rgba(255, 127, 14, 0.8)', 'rgba(44, 160, 44, 0.8)', 'rgba(214, 39, 40, 0.8)', 
+                 'rgba(148, 103, 189, 0.8)', 'rgba(140, 86, 75, 0.8)', 'rgba(227, 119, 194, 0.8)', 'rgba(127, 127, 127, 0.8)',
+                 'rgba(188, 189, 34, 0.8)', 'rgba(23, 190, 207, 0.8)', 'rgba(31, 119, 180, 0.8)', 'rgba(255, 127, 14, 0.8)', 
+                 'rgba(44, 160, 44, 0.8)', 'rgba(214, 39, 40, 0.8)', 'rgba(148, 103, 189, 0.8)']
+     opacity = 0.4
+     linkcolor_list = [nodecolor_list[src].replace("0.8", str(opacity)) for src in source_list]
+
+     fig = go.Figure(data=[go.Sankey(
+     node = dict(
+      pad = 15,
+      thickness = 20,
+      line = dict(color = "black", width = 0.5),
+      label = ['0', '1','2','3', '4', '5', '6',  '1','2','3', '4', '5', 'No Dementia', 'Dementia'],
+      x = [0.001, 0.001,0.001, 0.001, 0.001,0.001,0.001, 0.5, 0.5, 0.5, 0.5, 0.5, 0.999, 0.999 ],
+      y=[0.99, 0.92, 0.8, 0.6, 0.4, 0.25, 0.05, 0.90, 0.5, 0.25, 0.1, 0.05,  0.85, 0.2],
+      
+      #label = ['0', '1','2','3', '4', '5', '6',  '1','2','3', '4', '5'],
+      #x = [0.001, 0.001,0.001, 0.001, 0.001,0.001,0.001, 0.5, 0.5, 0.5, 0.5, 0.5],
+      #y=[0.99, 0.83, 0.66, 0.49, 0.32, 0.15, 0.05, 0.90, 0.5, 0.25, 0.1, 0.05],
+      color = nodecolor_list
+     ),
+    link = dict(
+      source = source_list, 
+      target = target_list,
+      value = value_list,
+      color = linkcolor_list  
+     ))])
+
+     fig.update_layout(title_text="Sankey Diagram: Braak stage, pTau protein and Dementia Status", font_size=20)
+     return fig
+
+def get_med_sanky_chart_3():
+     metrics_df = get_data_frame('ProteinAndPathologyQuantifications.csv')
+     donor_df = get_data_frame('DonorInformation.csv')
+     
+     metrics_donor_df = pd.merge(metrics_df, donor_df,  how='left', left_on='donor_name', right_on = 'name')
+     
+     scaler = MinMaxScaler()
+     scaled_at8= scaler.fit_transform(metrics_donor_df['ihc_at8_ffpe'].to_frame())
+     result_at8 = pd.cut(scaled_at8.ravel(), bins=[0.0, 0.2, 0.4, 0.6, 0.8, 1.00], right=True, labels=False).astype(int)+1
+     scaled_abeta= scaler.fit_transform(metrics_donor_df['ihc_a_beta_ffpe'].to_frame())
+     result_abeta = pd.cut(scaled_abeta.ravel(), bins=[0.0, 0.2, 0.4, 0.6, 0.8, 1.00], right=True, labels=False).astype(int)+1
+     
+     source_df = metrics_donor_df[['cerad',  'act_demented']]
+     source_df['a_beta'] = result_abeta
+     source_df['at8'] = result_at8
+     source_df['act_demented']=  source_df['act_demented'].map({'Dementia': 1, 'No Dementia': 0})
+     source_df = source_df[(source_df['a_beta']>0) & (source_df['at8']>0)]
+     
+     cerad_abeta = source_df.groupby(['cerad', 'a_beta'])['act_demented'].aggregate(np.ma.count)
+     cerad_abeta_df =pd.DataFrame(cerad_abeta)
+     cerad_abeta_df.reset_index(inplace=True)
+     cerad_abeta_df['a_beta'] = cerad_abeta_df['a_beta']+3
+
+     source_list = list(cerad_abeta_df['cerad'])
+     target_list = list(cerad_abeta_df['a_beta'])
+     value_list =list(cerad_abeta_df['act_demented'])
+     
+     abeta_dementia = source_df.groupby(['a_beta', 'act_demented'])['cerad'].aggregate(np.ma.count)
+     abeta_dementia_df =pd.DataFrame(abeta_dementia)
+     abeta_dementia_df.reset_index(inplace=True)
+     abeta_dementia_df['a_beta'] = abeta_dementia_df['a_beta'] + 3 
+     abeta_dementia_df['act_demented'] = abeta_dementia_df['act_demented'] + 9
+     
+     source_list =source_list + list(abeta_dementia_df['a_beta'])
+     target_list = target_list+ list(abeta_dementia_df['act_demented'])
+     value_list = value_list+ list(abeta_dementia_df['cerad'])
+     
+     nodecolor_list= ['rgba(31, 119, 180, 0.8)', 'rgba(255, 127, 14, 0.8)', 'rgba(44, 160, 44, 0.8)', 'rgba(214, 39, 40, 0.8)', 
+                 'rgba(148, 103, 189, 0.8)', 'rgba(140, 86, 75, 0.8)', 'rgba(227, 119, 194, 0.8)', 'rgba(127, 127, 127, 0.8)',
+                 'rgba(188, 189, 34, 0.8)', 'rgba(23, 190, 207, 0.8)', 'rgba(31, 119, 180, 0.8)', 'rgba(255, 127, 14, 0.8)', 
+                 'rgba(44, 160, 44, 0.8)', 'rgba(214, 39, 40, 0.8)', 'rgba(148, 103, 189, 0.8)']
+     opacity = 0.4
+     linkcolor_list = [nodecolor_list[src].replace("0.8", str(opacity)) for src in source_list]
+
+     fig = go.Figure(data=[go.Sankey(
+     node = dict(
+          pad = 15,
+          thickness = 20,
+          line = dict(color = "black", width = 0.5),
+          label = ['0', '1','2','3', '1','2','3', '4', '5', 'No Dementia', 'Dementia'],
+          x = [0.001, 0.001,0.001, 0.001, 0.5, 0.5, 0.5, 0.5, 0.5, 0.999, 0.999 ],
+          y=[0.99, 0.75, 0.45, 0.05, 0.90, 0.45, 0.25, 0.1, 0.05,  0.85, 0.2],
+          color = nodecolor_list
+     ),
+     link = dict(
+          source = source_list, 
+          target = target_list,
+          value = value_list,
+          color = linkcolor_list  
+     ))])
+
+     fig.update_layout(title_text="Sankey Diagram: CERAD SCore, Aβ protein and Dementia Status", font_size=20)
      return fig

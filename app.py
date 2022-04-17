@@ -92,14 +92,16 @@ def main():
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
                 st.write(graph)
     elif choose == 'Chart':
-        chart_list = ['chart2', 'chart3']
+        chart_list = ['data_chart', 'sanky1','sanky2','sanky3']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
-        if chart_selectbox == 'chart1':
+        if chart_selectbox == 'data_chart':
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
-        elif chart_selectbox == 'chart2':
-            st.plotly_chart(get_mad_chart_2(), use_container_width=True)
-        elif chart_selectbox == 'chart3':
-            st.plotly_chart(get_mad_chart_3(), use_container_width=True)
+        elif chart_selectbox == 'sanky1':
+            st.plotly_chart(get_med_sanky_chart_1(), use_container_width=True)
+        elif chart_selectbox == 'sanky2':
+            st.plotly_chart(get_med_sanky_chart_2(), use_container_width=True)
+        elif chart_selectbox == 'sanky3':
+            st.plotly_chart(get_med_sanky_chart_3(), use_container_width=True)
     elif choose == 'Prediction':
         get_model_form()
     elif choose == 'Contact':
