@@ -8,6 +8,12 @@ form_list_lables = ['cerad', 'braak', 'ihc_tau2_ffpe', 'ihc_at8_ffpe', 'ihc_at8'
                     ,'vegf_pg_per_mg', 'ab42_over_ab40_ratio','ptau_over_tau_ratio', 'a_syn_pg_per_mg', 'mcp_1_pg_per_mg','ab42_pg_per_mg']
 
 def get_model_form():
+    pickle_n = open('helper/normalizar.pkl', 'rb') 
+    normalizer = pickle.load(pickle_n)
+    
+    pickle_c = open('helper/classifier.pkl', 'rb') 
+    classifier = pickle.load(pickle_c)
+    
     st.markdown(""" <style> .font {
     font-size:30px ; font-family: 'Cooper Black'; color: #FF9633;} 
     </style> """, unsafe_allow_html=True)
@@ -15,15 +21,14 @@ def get_model_form():
     uploaded_file = st.file_uploader("Upload File(csv)", type =["csv"])
     if uploaded_file is not None:
         uploaded_df = pd.read_csv(uploaded_file)
-        #creeate aaray of values and norm.transform(array) then use the output for prediction
-        pickle_in = open('helper/model.pkl', 'rb') 
-        classifier = pickle.load(pickle_in)
-        prediction = classifier.predict_proba(uploaded_df)
-     
+        
+        #check the csv validation
+        df_norm = normalizer.transform(uploaded_df)
+        prediction = classifier.predict_proba(df_norm)
         output='{0:.{1}f}'.format(prediction[0][1], 2)
         output = (float(output) * 100)
-        output_string = "Chances of getting Dementia is **"+str(output)+"%**"
-        st.write(output_string)
+        output_string = "Chances of getting Dementia is "+str(output)+"%"
+        st.markdown(f'<h1 style="font-family:sans-serif;color:Blue;font-size:20px;">{output_string}</h1>', unsafe_allow_html=True)
     with st.form(key='dimentia_form',clear_on_submit=True): 
         st.subheader("Enter Values: ")
         col1, col2, col3 = st.columns([5,5,5])
@@ -70,11 +75,11 @@ def get_model_form():
             df_model = pd.DataFrame(columns = form_list_lables)
             df_model.loc[len(df_model)] = form_list_values
             
-            pickle_in = open('helper/model.pkl', 'rb') 
-            classifier = pickle.load(pickle_in)
-            prediction = classifier.predict_proba(df_model)
+            df_norm = normalizer.transform(df_model)
+            prediction = classifier.predict_proba(df_norm)
             
             output='{0:.{1}f}'.format(prediction[0][1], 2)
             output = (float(output) * 100)
-            output_string = "Chances of getting Dementia is **"+str(output)+"%**"
-            st.write(output_string)
+            output_string = "Chances of getting Dementia is "+str(output)+"%"
+            st.markdown(f'<h1 style="font-family:sans-serif;color:Blue;font-size:20px;">{output_string}</h1>', unsafe_allow_html=True)
+            #st.write(output_string)

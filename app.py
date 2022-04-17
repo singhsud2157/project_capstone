@@ -12,26 +12,6 @@ from helper.model_form import *
 
 def main():
     st.set_page_config(layout="wide")
-    #st.title("Capstone project")
-    # with st.sidebar:
-    #     selected = option_menu(None, ["Home", "Upload", "Tasks", 'Settings'], 
-    #         icons=['house', 'cloud-upload', "list-task", 'gear'], 
-    #         menu_icon="cast", default_index=0)
-    
-    # choose = option_menu(None, ["About", "Data", "Chart", "Prediction", "Contact"], 
-    #     #icons=['house', 'kanban', 'camera fill', 'book', 'book','person lines fill'], 
-    #     menu_icon="cast", default_index=0, orientation="horizontal")
-
-#     selected = option_menu(None, ["About", "Data",  "Charts", "Prediction","Settings"], 
-#         icons=['house', 'cloud-upload','house','house', 'gear'], 
-#         menu_icon="cast", default_index=0, orientation="horizontal",
-#         styles={
-#         "container": {"padding": "5!important", "background-color": "#fafafa"},
-#         "icon": {"color": "orange", "font-size": "25px"}, 
-#         "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-#         "nav-link-selected": {"background-color": "orange"},
-#     }
-# )
     hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -42,7 +22,7 @@ def main():
     
     with st.sidebar:
         choose = option_menu("Aging, Dementia, and TBI Study", ["About Team", "Study Findings", "Data",  "Data Exploration","Visual Exploration", "Dementia Prediction",
-                                                                "Feedback/Queries", "Ethical Audit"],
+                                                                "Feedback/Queries", "Ethics"],
                          icons=['house', 'book', 'list-task', 'camera fill','kanban', 'activity','person lines fill', 'bell'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
@@ -133,8 +113,10 @@ def main():
         get_model_form()
     elif choose == 'Feedback/Queries':
         contact_main()
-    elif choose == 'Ethical Audit':
-        st.write("Declaration of Ethical conduct")
+    elif choose == 'Ethics':
+        ethics_string = "As we are dealing with medical data, we need to think of ethical implications. Patient data have conventionally been thought to be well protected by the privacy laws outlined in the United States. But there are great concerns that shared patient data or data voluntarily provided by patients for research may be exploited for commercial interests. We as researchers should consider participants’ privacy and security while using shared data through new technologies such as artificial intelligence and other remote technologies."
+        st.markdown(f'<h1 style="font-family:sans-serif;color:Blue;font-size:20px;">{ethics_string}</h1>', unsafe_allow_html=True)
+     
 if __name__ == '__main__':
     main()
         
