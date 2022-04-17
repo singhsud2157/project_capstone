@@ -124,7 +124,7 @@ def get_med_sanky_chart_1():
       color = linkcolor_list  
       ))])
 
-     fig.update_layout(title_text="Basic Sankey Diagram", font_size=10)
+     fig.update_layout(title_text="Brain region, Braak stage and Dementia Status", font_size=20)
      return fig
 
 def get_med_sanky_chart_2():
@@ -198,7 +198,7 @@ def get_med_sanky_chart_2():
       color = linkcolor_list  
      ))])
 
-     fig.update_layout(title_text="Sankey Diagram: Braak stage, pTau protein and Dementia Status", font_size=20)
+     fig.update_layout(title_text="Braak stage, pTau protein and Dementia Status", font_size=20)
      return fig
 
 def get_med_sanky_chart_3():
@@ -262,5 +262,5 @@ def get_med_sanky_chart_3():
           color = linkcolor_list  
      ))])
 
-     fig.update_layout(title_text="Sankey Diagram: CERAD SCore, Aβ protein and Dementia Status", font_size=20)
+     fig.update_layout(title_text="CERAD SCore, Aβ protein and Dementia Status", font_size=20)
      return fig

@@ -92,16 +92,38 @@ def main():
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
                 st.write(graph)
     elif choose == 'Visual Exploration':
-        chart_list = ['parallel_chart', 'sanky1','sanky2','sanky3']
+        chart_list = ['parallel_chart', 'Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
         if chart_selectbox == 'parallel_chart':
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
-        elif chart_selectbox == 'sanky1':
+        elif chart_selectbox == 'Brain_Braak_Dimentia':
             st.plotly_chart(get_med_sanky_chart_1(), use_container_width=True)
-        elif chart_selectbox == 'sanky2':
+            st.write("The above Sankey diagram depicts the relationship between brain region, Braak stage and dementia status. " +
+                     "The left column shows the four brain regions, the middle column shows the 7 Braak stage number. "+ 
+                     "The right column shows the two dementia status. The width of each arrow between columns and the height of each bar of the column are based on the quantity."+
+                     "We can observe that samples are evenly distributed among 4 brain regions. Very few samples have Braak stage of 0." +
+                     "More samples have Braak stage of 3 than any other stage. Most samples with Braak stage of 5 or 6 have dementia " +
+                     "and most samples with Braak stage of 1 , 2 or 3 have no dementia. Almost half of the samples with Braak stage of 4 have dementia."
+                    )
+            st.write("If you want to know more about Braak stage, please read our blog post.")
+        elif chart_selectbox == 'Braak_pTau_Dementia':
             st.plotly_chart(get_med_sanky_chart_2(), use_container_width=True)
-        elif chart_selectbox == 'sanky3':
+            st.write("We used AT8 IHC level to represent pTau protein level in the brain tissues. AT8 IHC and pTau are strongly correlated " +
+                     "(Pearson correlation coefficient is 0.68). We scaled the AT8 IHC reading to values between 0 and 1," +
+                     "then evenly divide the range to 5 bins. So the Bin 1 represents the range between 0.0 and 0.20. " + 
+                     "Bin 5 represents the range between 0.81 and 1.0.We can observe that later Braak stages are associated with higher pTau levels. "+
+                     "2/3 of the samples with Braak Stage 6 have pTau protein level 2 and above while 1/6 of the samples with Braak Stage 1 have pTau protein level 2 and above." +
+                     "More samples with higher pTau protein level have dementia. 38% of the samples with pTau protein level 1 " +
+                     "have dementia while 86% of the samples with pTau level 5 have deme")
+            st.write("If you want to know more about Braak stage, AT8 IHC and pTau protein, please read our blog post.")
+        elif chart_selectbox == 'Cerad_Aβ_Dementia':
             st.plotly_chart(get_med_sanky_chart_3(), use_container_width=True)
+            st.write("We used Aβ IHC level to represent Aβ protein level in the brain tissues. We scaled the Aβ IHC reading to values between 0 and 1, " +
+                     "then evenly divide the range to 5 bins. So the Bin 1 represents the range between 0.0 and 0.20. Bin 5 represents the range between 0.81 and 1.0. "+
+                     "We can observe that higher CERAD scores are associated with higher Aβ protein levels. 51% of the samples with CERAD score 3 "+
+                     "have Aβ protein level 2 and above while only 3% of the samples with CERAD score 0 have Aβ protein level 2. " +
+                     "There is no clear correlation of Aβ protein level and dementia from this chart as almost half of the samples of various Aβ protein level have dementia.")
+            st.write("If you want to know more about CERAD score , Aβ protein, please read our blog post.")
     elif choose == 'Dementia Prediction':
         get_model_form()
     elif choose == 'Feedback/Queries':
