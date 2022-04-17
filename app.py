@@ -41,8 +41,9 @@ def main():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
     
     with st.sidebar:
-        choose = option_menu("Aging, Dementia, and TBI Study", ["About Team", "Study Findings", "Data",  "Data Exploration","Visual Exploration", "Dementia Prediction", "Feedback/Queries"],
-                         icons=['house', 'kanban', 'camera fill', 'book','book', 'book','person lines fill'],
+        choose = option_menu("Aging, Dementia, and TBI Study", ["About Team", "Study Findings", "Data",  "Data Exploration","Visual Exploration", "Dementia Prediction",
+                                                                "Feedback/Queries", "Ethical Audit"],
+                         icons=['house', 'book', 'list-task', 'camera fill','kanban', 'activity','person lines fill', 'bell'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
         "container": {"padding": "5!important", "background-color": "#fafafa"},
@@ -92,11 +93,9 @@ def main():
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
                 st.write(graph)
     elif choose == 'Visual Exploration':
-        chart_list = ['parallel_chart', 'Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia']
+        chart_list = ['Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia', 'Parallel Plot']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
-        if chart_selectbox == 'parallel_chart':
-            st.plotly_chart(get_med_chart_1(), use_container_width=True)
-        elif chart_selectbox == 'Brain_Braak_Dimentia':
+        if chart_selectbox == 'Brain_Braak_Dimentia':
             st.plotly_chart(get_med_sanky_chart_1(), use_container_width=True)
             st.write("The above Sankey diagram depicts the relationship between brain region, Braak stage and dementia status. " +
                      "The left column shows the four brain regions, the middle column shows the 7 Braak stage number. "+ 
@@ -124,11 +123,18 @@ def main():
                      "have Aβ protein level 2 and above while only 3% of the samples with CERAD score 0 have Aβ protein level 2. " +
                      "There is no clear correlation of Aβ protein level and dementia from this chart as almost half of the samples of various Aβ protein level have dementia.")
             st.write("If you want to know more about CERAD score , Aβ protein, please read our blog post.")
+        elif chart_selectbox == 'Parallel Plot':
+            st.plotly_chart(get_med_chart_1(), use_container_width=True)
+            st.write("The parallel coordinates plot allows us to see many variables together with the target variable (dementia status). " +
+                     "We can make selection of the samples displayed by selecting a range of values for any given variable(by sliders on each column). " +
+                     "For example, if we select dementia status to be 0 on the right most column, only samples with no dementia will be displayed with color.")
+            st.write("If you want to know more about Dementia, please read our blog post.")
     elif choose == 'Dementia Prediction':
         get_model_form()
     elif choose == 'Feedback/Queries':
         contact_main()
-    
+    elif choose == 'Ethical Audit':
+        st.write("Declaration of Ethical conduct")
 if __name__ == '__main__':
     main()
         

@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
 import plotly.graph_objects as go
+import plotly.express as px
 
 from helper.load_data import *
 
@@ -27,11 +28,11 @@ def get_med_chart_1():
         
      fig = go.Figure(data=
      go.Parcoords(
-        line = dict(color = df_plot['cerad'],
-                   colorscale = 'Electric',
+        line = dict(color = df_plot['braak'],
+                   colorscale = 'Tealrose',
                    showscale = True,
                    cmin = 0,
-                   cmax = 7),
+                   cmax = 8),
         dimensions = list([
             dict(range = [0,3],
                  label = 'cerad', values = df_plot['cerad']),
@@ -54,8 +55,10 @@ def get_med_chart_1():
             dict(range = [0,1],
                  visible = True,
                  label = 'act_demented', values = df_plot['act_demented'])])
-    )
-)
+          )
+     )
+     
+     fig.update_layout(title_text="Parallel Plot", font_size=20, title_font_color="black",)
      return fig
 
 def get_med_sanky_chart_1():
@@ -124,7 +127,7 @@ def get_med_sanky_chart_1():
       color = linkcolor_list  
       ))])
 
-     fig.update_layout(title_text="Brain region, Braak stage and Dementia Status", font_size=20)
+     fig.update_layout(title_text="Brain region, Braak stage and Dementia Status", font_size=20, title_font_color="black")
      return fig
 
 def get_med_sanky_chart_2():
@@ -198,7 +201,7 @@ def get_med_sanky_chart_2():
       color = linkcolor_list  
      ))])
 
-     fig.update_layout(title_text="Braak stage, pTau protein and Dementia Status", font_size=20)
+     fig.update_layout(title_text="Braak stage, pTau protein and Dementia Status", font_size=20, title_font_color="black")
      return fig
 
 def get_med_sanky_chart_3():
@@ -262,5 +265,5 @@ def get_med_sanky_chart_3():
           color = linkcolor_list  
      ))])
 
-     fig.update_layout(title_text="CERAD SCore, Aβ protein and Dementia Status", font_size=20)
+     fig.update_layout(title_text="CERAD SCore, Aβ protein and Dementia Status", font_size= 20, title_font_color="black")
      return fig
