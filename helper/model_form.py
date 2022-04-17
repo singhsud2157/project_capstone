@@ -15,6 +15,7 @@ def get_model_form():
     uploaded_file = st.file_uploader("Upload File(csv)", type =["csv"])
     if uploaded_file is not None:
         uploaded_df = pd.read_csv(uploaded_file)
+        #creeate aaray of values and norm.transform(array) then use the output for prediction
         pickle_in = open('helper/model.pkl', 'rb') 
         classifier = pickle.load(pickle_in)
         prediction = classifier.predict_proba(uploaded_df)

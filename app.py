@@ -41,7 +41,7 @@ def main():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
     
     with st.sidebar:
-        choose = option_menu("Capstone", ["About Team", "About Project", "Data",  "Data Exploration","Chart", "Prediction", "Contact"],
+        choose = option_menu("Aging, Dementia, and TBI Study", ["About Team", "Study Findings", "Data",  "Data Exploration","Visual Exploration", "Dementia Prediction", "Feedback/Queries"],
                          icons=['house', 'kanban', 'camera fill', 'book','book', 'book','person lines fill'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
@@ -54,7 +54,7 @@ def main():
     
     if choose == 'About Team':
         abount_main()
-    elif choose == 'About Project':
+    elif choose == 'Study Findings':
         about_project()
     elif choose == 'Data':
         list =get_file_list()
@@ -91,10 +91,10 @@ def main():
                 y_axis = st.selectbox("Choose a variable for the y-axis:", column_list, index=1)
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
                 st.write(graph)
-    elif choose == 'Chart':
-        chart_list = ['data_chart', 'sanky1','sanky2','sanky3']
+    elif choose == 'Visual Exploration':
+        chart_list = ['parallel_chart', 'sanky1','sanky2','sanky3']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
-        if chart_selectbox == 'data_chart':
+        if chart_selectbox == 'parallel_chart':
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
         elif chart_selectbox == 'sanky1':
             st.plotly_chart(get_med_sanky_chart_1(), use_container_width=True)
@@ -102,9 +102,9 @@ def main():
             st.plotly_chart(get_med_sanky_chart_2(), use_container_width=True)
         elif chart_selectbox == 'sanky3':
             st.plotly_chart(get_med_sanky_chart_3(), use_container_width=True)
-    elif choose == 'Prediction':
+    elif choose == 'Dementia Prediction':
         get_model_form()
-    elif choose == 'Contact':
+    elif choose == 'Feedback/Queries':
         contact_main()
     
 if __name__ == '__main__':
