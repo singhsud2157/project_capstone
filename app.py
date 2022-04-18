@@ -39,7 +39,7 @@ def main():
         about_project()
     elif choose == 'Data':
         list =get_file_list()
-        add_selectbox = st.sidebar.selectbox("Select the data file",list)
+        add_selectbox = st.selectbox("Select the data file",list)
         df = get_data_frame(add_selectbox)
         #st.dataframe(df)
         gb = GridOptionsBuilder.from_dataframe(df)
@@ -74,7 +74,7 @@ def main():
                 st.write(graph)
     elif choose == 'Visual Exploration':
         chart_list = ['Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia', 'Parallel Coordinates Plot']
-        chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
+        chart_selectbox = st.selectbox("Select the chart",chart_list)
         if chart_selectbox == 'Brain_Braak_Dimentia':
             st.plotly_chart(get_med_sanky_chart_1(), use_container_width=True)
             sanky1 = """The above Sankey diagram depicts the relationship between brain region, Braak stage and dementia status. 
