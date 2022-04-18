@@ -22,7 +22,7 @@ def main():
     
     with st.sidebar:
         choose = option_menu("Aging, Dementia, and TBI Study", ["About Team", "Study Findings", "Data",  "Data Exploration","Visual Exploration", "Dementia Prediction",
-                                                                "Feedback/Inqueries", "Ethics"],
+                                                                "Feedback/Inquiries", "Ethics"],
                          icons=['house', 'book', 'list-task', 'camera fill','kanban', 'activity','person lines fill', 'bell'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
@@ -117,7 +117,7 @@ def main():
             st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:12px;">{"If you want to know more about Dementia, please read our blog post."}</h1>', unsafe_allow_html=True)
     elif choose == 'Dementia Prediction':
         get_model_form()
-    elif choose == 'Feedback/Inqueries':
+    elif choose == 'Feedback/Inquiries':
         contact_main()
     elif choose == 'Ethics':
         ethics_string = """As we are dealing with medical data, we need to think of ethical implications. 
