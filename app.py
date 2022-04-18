@@ -74,6 +74,7 @@ def main():
                 st.write(graph)
     elif choose == 'Visual Exploration':
         chart_list = ['Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia', 'Parallel Coordinates Plot']
+        #st.markdown("<h1 style='font-family:sans-serif; color: black;font-size:14px;'>Select the chart</h1>", unsafe_allow_html=True)
         chart_selectbox = st.selectbox("Select the chart",chart_list)
         if chart_selectbox == 'Brain_Braak_Dimentia':
             st.plotly_chart(get_med_sanky_chart_1(), use_container_width=True)
