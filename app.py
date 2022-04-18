@@ -85,7 +85,7 @@ def main():
                     Very few samples have Braak stage of 0. More samples have Braak stage of 3 than any other stage. 
                     Most samples with Braak stage of 5 or 6 have dementia and most samples with Braak stage of 1 , 2 or 3 have no dementia. 
                     Almost half of the samples with Braak stage of 4 have dementia."""
-            st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:14px;">{sanky1}</h1>', unsafe_allow_html=True)
+            st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{sanky1}</p>', unsafe_allow_html=True)
             st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:12px;">{"If you want to know more about Braak stage, please read our blog post."}</h1>', unsafe_allow_html=True)
         elif chart_selectbox == 'Braak_pTau_Dementia':
             st.plotly_chart(get_med_sanky_chart_2(), use_container_width=True)
@@ -97,7 +97,7 @@ def main():
                      2/3 of the samples with Braak Stage 6 have pTau protein level 2 and above while 1/6 of the samples with Braak Stage 1 have pTau protein level 2 and above. 
                      More samples with higher pTau protein level have dementia. 
                      38% of the samples with pTau protein level 1 have dementia while 86% of the samples with pTau level 5 have dementia."""
-            st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:14px;">{sanky2}</h1>', unsafe_allow_html=True)
+            st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{sanky2}</p>', unsafe_allow_html=True)
             st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:12px;">{"If you want to know more about Braak stage, AT8 IHC and pTau protein, please read our blog post."}</h1>', unsafe_allow_html=True)
         elif chart_selectbox == 'Cerad_Aβ_Dementia':
             st.plotly_chart(get_med_sanky_chart_3(), use_container_width=True)
@@ -106,14 +106,14 @@ def main():
                      We can observe that higher CERAD scores are associated with higher Aβ protein levels. 51% of the samples with CERAD score 3 
                      have Aβ protein level 2 and above while only 3% of the samples with CERAD score 0 have Aβ protein level 2. 
                      There is no clear correlation of Aβ protein level and dementia from this chart as almost half of the samples of various Aβ protein level have dementia."""
-            st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:14px;">{sanky3}</h1>', unsafe_allow_html=True)
+            st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{sanky3}</p>', unsafe_allow_html=True)
             st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:12px;">{"If you want to know more about CERAD score , Aβ protein, please read our blog post."}</h1>', unsafe_allow_html=True)
         elif chart_selectbox == 'Parallel Coordinates Plot':
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
             p_plot1 = """The parallel coordinates plot allows us to see many variables together with the target variable (dementia status). 
                      We can make selection of the samples displayed by selecting a range of values for any given variable(by sliders on each column). 
                      For example, if we select dementia status to be 0 on the right most column, only samples with no dementia will be displayed with color."""
-            st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:14px;">{p_plot1}</h1>', unsafe_allow_html=True)
+            st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{p_plot1}</p>', unsafe_allow_html=True)
             st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:12px;">{"If you want to know more about Dementia, please read our blog post."}</h1>', unsafe_allow_html=True)
     elif choose == 'Dementia Prediction':
         get_model_form()
@@ -125,7 +125,7 @@ def main():
         But there are great concerns that shared patient data or data voluntarily provided by patients for research may be exploited for commercial interests. 
         We as researchers should consider participants’ privacy and security while using shared data through new technologies such as 
         artificial intelligence and other remote technologies."""
-        st.markdown(f'<h1 style="font-family:sans-serif;color:Black;font-size:20px;">{ethics_string}</h1>', unsafe_allow_html=True)
+        st.markdown(f'<p style="font-family:sans-serif;color:Black;font-size:14px;">{ethics_string}</p>', unsafe_allow_html=True)
      
 if __name__ == '__main__':
     main()
