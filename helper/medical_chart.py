@@ -35,30 +35,30 @@ def get_med_chart_1():
                    cmax = 8),
         dimensions = list([
             dict(range = [0,3],
-                 label = 'cerad', values = df_plot['cerad']),
+                 label = 'CERAD Score', values = df_plot['cerad']),
             dict(range = [0,8],
-                 label = 'braak', values = df_plot['braak']),
+                 label = 'Braak Stage', values = df_plot['braak']),
             dict(range = [0,2],
-                 label = 'apo_e4_allele', values = df_plot['apo_e4_allele']),
+                 label = 'ApoE4', values = df_plot['apo_e4_allele']),
             dict(range = [0,3],
                  visible = True,
-                 label = 'num_tbi_w_loc', values = df_plot['num_tbi_w_loc']),
+                 label = '#TBI', values = df_plot['num_tbi_w_loc']),
             dict(range = [0.000018,0.112065],
                  visible = True,
-                 label = 'ihc_at8', values = df_plot['ihc_at8']),
+                 label = 'AT8 IHC', values = df_plot['ihc_at8']),
             dict(range = [0.000157,0.088290],
                  visible = True,
-                 label = 'ihc_a_beta', values = df_plot['ihc_a_beta']),
+                 label = 'Aβ IHC', values = df_plot['ihc_a_beta']),
             dict(range = [0.020000,2.556488],
                  visible = True,
-                 label = 'a_syn_pg_per_mg', values = df_plot['a_syn_pg_per_mg']),
+                 label = 'α-synuclein', values = df_plot['a_syn_pg_per_mg']),
             dict(range = [0,1],
                  visible = True,
-                 label = 'act_demented', values = df_plot['act_demented'])])
+                 label = 'Dementia', values = df_plot['act_demented'])])
           )
      )
      
-     fig.update_layout(title_text="Parallel Plot", font_size=20, title_font_color="black",)
+     fig.update_layout(title_text="Parallel Coordinates Plot", font_size=20, title_font_color="black",)
      return fig
 
 def get_med_sanky_chart_1():

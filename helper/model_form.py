@@ -70,8 +70,7 @@ def get_model_form():
             form_list_values.append(float(a_syn_pg_per_mg))
             form_list_values.append(float(mcp_1_pg_per_mg))
             form_list_values.append(float(ab42_pg_per_mg))
-            #form_list_values1 = [3,6,0.013154,0.012725,0.000078,0.01158,0.013552,0.731336,0.457328,0.17,400.831725,0.30181,0.070626,41.73,100.00085]
-            #print(form_list_values)
+            
             df_model = pd.DataFrame(columns = form_list_lables)
             df_model.loc[len(df_model)] = form_list_values
             
@@ -82,4 +81,4 @@ def get_model_form():
             output = (float(output) * 100)
             output_string = "Chances of getting Dementia is "+str(output)+"%"
             st.markdown(f'<h1 style="font-family:sans-serif;color:Blue;font-size:20px;">{output_string}</h1>', unsafe_allow_html=True)
-            #st.write(output_string)
+            

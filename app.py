@@ -73,7 +73,7 @@ def main():
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
                 st.write(graph)
     elif choose == 'Visual Exploration':
-        chart_list = ['Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia', 'Parallel Plot']
+        chart_list = ['Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia', 'Parallel Coordinates Plot']
         chart_selectbox = st.sidebar.selectbox("Select the chart",chart_list)
         if chart_selectbox == 'Brain_Braak_Dimentia':
             st.plotly_chart(get_med_sanky_chart_1(), use_container_width=True)
@@ -108,7 +108,7 @@ def main():
                      There is no clear correlation of Aβ protein level and dementia from this chart as almost half of the samples of various Aβ protein level have dementia."""
             st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:14px;">{sanky3}</h1>', unsafe_allow_html=True)
             st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:12px;">{"If you want to know more about CERAD score , Aβ protein, please read our blog post."}</h1>', unsafe_allow_html=True)
-        elif chart_selectbox == 'Parallel Plot':
+        elif chart_selectbox == 'Parallel Coordinates Plot':
             st.plotly_chart(get_med_chart_1(), use_container_width=True)
             p_plot1 = """The parallel coordinates plot allows us to see many variables together with the target variable (dementia status). 
                      We can make selection of the samples displayed by selecting a range of values for any given variable(by sliders on each column). 
