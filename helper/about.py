@@ -12,18 +12,6 @@ sudeep = Image.open('image_data/sudeep.PNG')
 christina = Image.open('image_data/christina.PNG')
 
 
-def abount_main1():
-    col1, col2 = st.columns( [0.5, 0.5])
-    with col1:               # To display the header text using css style
-        st.markdown(""" <style> .font {
-        font-size:25px ; font-family: 'Cooper Black'; color: #FF9633;} 
-        </style> """, unsafe_allow_html=True)
-        st.markdown('<p class="font">Chen Xu</p>', unsafe_allow_html=True)
-        st.image(chen)
-    with col2: 
-        st.write("Hi, I am Chen Xu. I have worked for an insurance company for about 20 years. Ever since I took a Machine Learning Course on Coursera taught by Andrew Ng in 2018, I have been excited about data science. I want to take on real-world data challenges, use data to improve outcomes and achieve goals.  After 20 months of study with the MADS program, I have already started to  apply  skills learned  in ways that help organizations become more effective, strategic, ethical, and successful.")
-    
-
 def abount_main():
     #st.subheader("Who we are?")
     st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:25px;">{"About"}</1>', unsafe_allow_html=True)    
