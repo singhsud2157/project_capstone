@@ -6,7 +6,6 @@ import image_data
 import os
 import base64
 
-logo = Image.open('image_data/uofm.png')
 chen = Image.open('image_data/chen.PNG')
 himank = Image.open('image_data/himank.PNG')
 sudeep = Image.open('image_data/sudeep.PNG')
@@ -31,7 +30,8 @@ def abount_main():
     team_story = """This is team <b>Yamanaka</b>. We are a group of masters students from University of Michigan completing our masters in applied data science. 
              Over the course of our close to 2 years of study, we have learned machine learning, data mining, NLP, visual exploration and many more that data scientist need. 
              We have been given an opportunity to apply all our learnings to our final capstone project and this site is an outcome of over 500 hrs spent collectively by 
-             this team on this project. Read more about who we are as individuals."""
+             this team on this project. We would like to thanks Christina for facilitating such a positive learning environment!. Thank you so much for your time and patience. 
+             You definitively love to teach and guide. You make things very simple and human. Read more about who we are as individuals."""
     
     st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{team_story}</p>', unsafe_allow_html=True)    
     
