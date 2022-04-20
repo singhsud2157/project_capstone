@@ -73,7 +73,9 @@ def main():
                 x_axis = st.selectbox("Choose a variable for the x-axis:", column_list, index=0)
                 y_axis = st.selectbox("Choose a variable for the y-axis:", column_list, index=1)
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
+                    
                 st.write(graph)
+               
     elif choose == 'Visual Exploration':
         chart_list = ['Brain_Braak_Dimentia','Braak_pTau_Dementia','Cerad_Aβ_Dementia', 'Parallel Coordinates Plot']
         #st.markdown("<h1 style='font-family:sans-serif; color: black;font-size:14px;'>Select the chart</h1>", unsafe_allow_html=True)

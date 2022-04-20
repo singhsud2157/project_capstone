@@ -18,10 +18,10 @@ def get_model_form():
     font-size:30px ; font-family: 'Cooper Black'; color: #FF9633;} 
     </style> """, unsafe_allow_html=True)
     st.markdown('<p class="font">Brain Dementia Prediction Model</p>', unsafe_allow_html=True)
-    uploaded_file = st.file_uploader("Upload File(csv)", type =["csv"])
+    uploaded_file = st.file_uploader("Upload File(csv) ", type =["csv"])
     if uploaded_file is not None:
         uploaded_df = pd.read_csv(uploaded_file)
-        
+        uploaded_df = uploaded_df[form_list_lables]
         #check the csv validation
         df_norm = normalizer.transform(uploaded_df)
         prediction = classifier.predict_proba(df_norm)
