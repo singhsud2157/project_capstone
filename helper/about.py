@@ -14,7 +14,7 @@ christina = Image.open('image_data/christina.PNG')
 
 def abount_main():
     #st.subheader("Who we are?")
-    st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:25px;">{"About"}</1>', unsafe_allow_html=True)    
+    st.markdown(f'<h1 style="font-family:sans-serif;color:black;font-size:25px;">{"About Team"}</1>', unsafe_allow_html=True)    
     team_story = """This is team <b>Yamanaka</b>. We are a group of masters students from University of Michigan completing our masters in applied data science. 
              Over the course of our close to 2 years of study, we have learned machine learning, data mining, NLP, visual exploration and many more that data scientist need. 
              We have been given an opportunity to apply all our learnings to our final capstone project and this site is an outcome of over 500 hrs spent collectively by 

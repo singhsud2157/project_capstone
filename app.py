@@ -38,8 +38,8 @@ def main():
     elif choose == 'Study Findings':
         about_project()
     elif choose == 'Data':
-        list =get_file_list()
-        add_selectbox = st.selectbox("Select the data file",list)
+        file_list = get_file_list()
+        add_selectbox = st.selectbox("Select the data file",file_list)
         df = get_data_frame(add_selectbox)
         #st.dataframe(df)
         gb = GridOptionsBuilder.from_dataframe(df)
@@ -52,7 +52,7 @@ def main():
     elif choose == 'Data Exploration':
         st.title("Data Exploration")
         file_list =get_file_list()
-        select_file_name_list = st.multiselect("Select the file:", options=file_list, default=file_list[0])
+        select_file_name_list = st.multiselect("Select the file:", options=file_list, default=file_list[4])
         if select_file_name_list :
             merge_df = get_merge_dataframe(select_file_name_list)
             if merge_df.empty:
@@ -67,7 +67,9 @@ def main():
                         merge_df = merge_df.drop(columns=non_floats)
                 except Exception as e:
                     print('error', e)
-                column_list = merge_df.columns
+                drop_list = ['donor_id', 'structure_id', 'education_years']
+                column_list = list(merge_df.columns.values)
+                column_list = remove_all_by_values(column_list, drop_list)
                 x_axis = st.selectbox("Choose a variable for the x-axis:", column_list, index=0)
                 y_axis = st.selectbox("Choose a variable for the y-axis:", column_list, index=1)
                 graph = visualize_chart_data(merge_df, x_axis, y_axis, column_list)
@@ -127,7 +129,13 @@ def main():
         We as researchers should consider participants’ privacy and security while using shared data through new technologies such as 
         artificial intelligence and other remote technologies."""
         st.markdown(f'<p style="font-family:sans-serif;color:Black;font-size:14px;">{ethics_string}</p>', unsafe_allow_html=True)
-     
+
+def remove_all_by_values(list_obj, values):
+    for value in values:
+        while value in list_obj:
+            list_obj.remove(value)
+    return list_obj     
+
 if __name__ == '__main__':
     main()
         
