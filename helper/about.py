@@ -23,7 +23,7 @@ def abount_main():
     
     st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{team_story}</p>', unsafe_allow_html=True)    
     
-    col1, mid, col2 = st.columns([2,1,20])
+    col1, mid, col2 = st.columns([3,1,15])
     with col1:               # To display the header text using css style
         st.image(chen, width=160)
         
@@ -35,7 +35,7 @@ def abount_main():
                  I have already started to  apply  skills learned  in ways that help organizations become more effective, strategic, ethical, and successful."""
         st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{chen_story}</p>', unsafe_allow_html=True)    
     
-    col1, mid, col2 = st.columns([2,1,20])
+    col1, mid, col2 = st.columns([3,1,15])
     with col1:               # To display the header text using css style
         st.image(himank, width=160)
         
@@ -51,7 +51,7 @@ def abount_main():
                         I contribute to my capacity to make this society a better place by teaching kids in rural parts of India. """
         st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{himank_story}</p>', unsafe_allow_html=True)
             
-    col1, mid, col2 = st.columns([2,1,20])
+    col1, mid, col2 = st.columns([3,1,15])
     
     with col1:               
         st.image(sudeep, width=160)
@@ -62,7 +62,7 @@ def abount_main():
                         By pursuing the Data Science field, I have been challenged to expand my knowledge and skills in new areas."""
         st.markdown(f'<p style="font-family:sans-serif;color:black;font-size:14px;">{sudeep_story}</p>', unsafe_allow_html=True)
     
-    col1, mid, col2 = st.columns([2,1,20])
+    col1, mid, col2 = st.columns([3,1,15])
     with col1:               
         st.image(christina, width=160)
         
