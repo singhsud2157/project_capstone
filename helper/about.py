@@ -79,12 +79,14 @@ def abount_main():
 
 def about_project():
     # Opening file from file path
+    print('here')
     file_pdf = 'helper/capstone-blogpost.pdf'
     with open(file_pdf, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 
     # Embedding PDF in HTML
-    pdf_display = F'<embed src="data:application/pdf;base64,{base64_pdf}" width="900" height="800" type="application/pdf">'
+    pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="800" type="application/pdf"></iframe>'
 
     # Displaying File
     st.markdown(pdf_display, unsafe_allow_html=True)
+    

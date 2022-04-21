@@ -2,7 +2,7 @@ from cmath import e
 import streamlit as st
 from streamlit_option_menu import option_menu
 from helper.about import abount_main, about_project
-from helper.contact import contact_main
+from helper.contact import contact_main, contact_main1
 from helper.select_data import get_file_list, get_data_frame
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
@@ -52,7 +52,7 @@ def main():
     elif choose == 'Data Exploration':
         st.title("Data Exploration")
         file_list =get_file_list()
-        select_file_name_list = st.multiselect("Select the file:", options=file_list, default=file_list[4])
+        select_file_name_list = st.multiselect("Select the file:", options=file_list, default=file_list[2])
         if select_file_name_list :
             merge_df = get_merge_dataframe(select_file_name_list)
             if merge_df.empty:
@@ -123,7 +123,7 @@ def main():
     elif choose == 'Dementia Prediction':
         get_model_form()
     elif choose == 'Feedback/Inquiries':
-        contact_main()
+        contact_main1()
     elif choose == 'Ethics':
         ethics_string = """As we are dealing with medical data, we need to think of ethical implications. 
         Patient data have conventionally been thought to be well protected by the privacy laws outlined in the United States. 
