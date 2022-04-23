@@ -59,23 +59,23 @@ def get_model_form():
             form_list_values.append(float(cerad))
             form_list_values.append(float(braak))
            
-            if ihc_tau2_ffpe.strip() and (0.000393 < float(ihc_tau2_ffpe) < 0.037959):
+            if ihc_tau2_ffpe.strip() and (0.00 < float(ihc_tau2_ffpe) < 0.039):
                 form_list_values.append(float(ihc_tau2_ffpe))
             else:
                 validation_form = True
-                st.error("IHC Tau Protien (FFPE) should be in between 0.000393 and 0.037959")
+                st.error("IHC Tau Protien (FFPE) should be in between 0.00 and 0.039")
             
-            if ihc_at8_ffpe.strip() and (0.000260 < float(ihc_at8_ffpe) < 0.054700):
+            if ihc_at8_ffpe.strip() and (0.00 < float(ihc_at8_ffpe) < 0.06):
                 form_list_values.append(float(ihc_at8_ffpe))
             else:
                 validation_form = True
-                st.error("IHC AT8 Immunreactivity (FFPE) should be in between 0.000260 and 0.054700")
+                st.error("IHC AT8 Immunreactivity (FFPE) should be in between 0.00 and 0.06")
                         
-            if ihc_at8.strip() and (0.000011 < float(ihc_at8) < 0.112075):
+            if ihc_at8.strip() and (0.00 < float(ihc_at8) < 0.12):
                 form_list_values.append(float(ihc_at8))
             else:
                 validation_form = True
-                st.error("IHC AT8 Immunreactivity should be in between 0.000011 and 0.112075")
+                st.error("IHC AT8 Immunreactivity should be in between 0.00 and 0.12")
             
             if ihc_a_beta_ffpe.strip() and (0.001110 < float(ihc_a_beta_ffpe) < 0.069399):
                 form_list_values.append(float(ihc_a_beta_ffpe))
@@ -83,23 +83,23 @@ def get_model_form():
                 validation_form = True
                 st.error("IHC Amyloid Beta (FFPE) should be in between 0.001110 and 0.069399")
             
-            if ihc_a_beta.strip() and (0.000151 < float(ihc_a_beta) < 0.088390):
+            if ihc_a_beta.strip() and (0.00 < float(ihc_a_beta) < 0.09):
                 form_list_values.append(float(ihc_a_beta))
             else:
                 validation_form = True
-                st.error("IHC Amyloid Beta should be in between 0.000151 and 0.088390")
+                st.error("IHC Amyloid Beta should be in between 0.00 and 0.09")
             
-            if ihc_gfap_ffpe.strip() and (0.008370 < float(ihc_gfap_ffpe) < 0.121651):
+            if ihc_gfap_ffpe.strip() and (0.00 < float(ihc_gfap_ffpe) < 0.13):
                 form_list_values.append(float(ihc_gfap_ffpe))
             else:
                 validation_form = True
-                st.error("IHC GFAP Immunreactivity (FFPE) should be in between 0.008370 and 0.121651")
+                st.error("IHC GFAP Immunreactivity (FFPE) should be in between 0.00 and 0.13")
             
-            if ptau_ng_per_mg.strip() and (0.016792 < float(ptau_ng_per_mg) < 6.444010):
+            if ptau_ng_per_mg.strip() and (0.01 < float(ptau_ng_per_mg) < 6.50):
                 form_list_values.append(float(ptau_ng_per_mg))
             else:
                 validation_form = True
-                st.error("Phosphorylated Tau should be in between 0.016792 and 6.444010")
+                st.error("Phosphorylated Tau should be in between 0.01 and 6.50")
             
             if vegf_pg_per_mg.strip() and (0 < float(vegf_pg_per_mg) < 8.92):
                 form_list_values.append(float(vegf_pg_per_mg))
@@ -107,35 +107,35 @@ def get_model_form():
                 validation_form = True
                 st.error("Vascular endothelial growth factor (per mg) should be in between 0.00 and 8.92")
             
-            if ab42_over_ab40_ratio.strip() and (0.016673 < float(ab42_over_ab40_ratio) < 1000):
+            if ab42_over_ab40_ratio.strip() and (0.02 < float(ab42_over_ab40_ratio) < 1000):
                 form_list_values.append(float(ab42_over_ab40_ratio))
             else:
                 validation_form = True
-                st.error("Ratio of ABeta40 to Abeta42 should be in between 0.016673 and 1000")
+                st.error("Ratio of ABeta40 to Abeta42 should be in between 0.02 and 1000")
             
-            if ptau_over_tau_ratio.strip() and (0.011621 < float(ptau_over_tau_ratio) < 6.386955):
+            if ptau_over_tau_ratio.strip() and (0.01 < float(ptau_over_tau_ratio) < 6.40):
                 form_list_values.append(float(ptau_over_tau_ratio))
             else:
                 validation_form = True
-                st.error("Ratio of phosphorylated tau to all tau should be in between 0.011621 and 6.386955")
+                st.error("Ratio of phosphorylated tau to all tau should be in between 0.01 and 6.40")
 
-            if a_syn_pg_per_mg.strip() and (0.020000 < float(a_syn_pg_per_mg) < 2.557488):
+            if a_syn_pg_per_mg.strip() and (0.02 < float(a_syn_pg_per_mg) < 2.56):
                 form_list_values.append(float(a_syn_pg_per_mg))
             else:
                 validation_form = True
-                st.error("Alpha-synuclein (per mg) should be in between 0.020000 and 2.557488")
+                st.error("Alpha-synuclein (per mg) should be in between 0.02 and 2.56")
             
-            if mcp_1_pg_per_mg.strip() and (0 < float(mcp_1_pg_per_mg) < 261.98):
+            if mcp_1_pg_per_mg.strip() and (0 < float(mcp_1_pg_per_mg) < 261.99):
                 form_list_values.append(float(mcp_1_pg_per_mg))
             else:
                 validation_form = True
-                st.error("Monocyte chemotactic protein 1 should be in between 0 and 261.98")
+                st.error("Monocyte chemotactic protein 1 should be in between 0 and 261.99")
             
-            if ab42_pg_per_mg.strip() and (0.006737 < float(ab42_pg_per_mg) < 652.530050):
+            if ab42_pg_per_mg.strip() and (0.00 < float(ab42_pg_per_mg) < 652.54):
                 form_list_values.append(float(ab42_pg_per_mg))
             else:
                 validation_form = True
-                st.error("Beta-Amyloid 1-42 should be in between 0.006737 and 653.00")
+                st.error("Beta-Amyloid 1-42 should be in between 0.00 and 652.54")
             
             if not validation_form:
                 df_model = pd.DataFrame(columns = form_list_lables)
